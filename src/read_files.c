@@ -1,6 +1,6 @@
 #include "../inc/uls.h"
 
-char **mx_read_files(char *dir, int flags[]) {
+char **mx_read_files(char *dir) {
     DIR *s_dir = opendir(dir);
     struct dirent *s_file = readdir(s_dir);
     char **file_names;
@@ -9,13 +9,11 @@ char **mx_read_files(char *dir, int flags[]) {
     for (; readdir(s_dir) != NULL; count++);
     closedir(s_dir);
     s_dir = opendir(dir);
-    file_names = mx_arrchar_new(count * 2);
+    file_names = mx_arrchar_new(count);
     for (int i = 0; (s_file = readdir(s_dir)) != NULL; i++) {
         file_names[i] = s_file->d_name;
     }
     closedir(s_dir);
-    mx_del_hidden(file_names, flags);
-    flags[11] = count;
     return file_names;
 }
-// потім передавати count одрзу в структуру t_cur_dir
+

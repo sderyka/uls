@@ -18,28 +18,27 @@
 #ifndef __structures_uls__
 #define __structures_uls__
 
-typedef struct s_files {
-	char *filename;
-    struct stat s_stat;
-    // struct s_files *next;
-} t_files;
+// typedef struct s_files {
+// 	char *filename;
+//     struct stat s_stat;
+//     // struct s_files *next;
+// } t_files;
 
-typedef struct s_cur_dir {
+// typedef struct s_cur_dir {
+//     char *path;
+//     int count;
+//     t_files *files;
+//     char **dir_files;
+// } t_cur_dir;
+
+
+typedef struct s_obj {
+    char *name; 
+    struct stat stat;
+    struct s_obj *content;
     char *path;
-    int count;
-    t_files *files;
-    char **dir_files;
-} t_cur_dir;
-
-typedef struct s_longout {
-	char *filename;
-    mode_t	mode;
-    int nlink;
-    char *username;
-    char *groupname;
-    int size;
-    // time_t	mod_time;
-} t_longout;
+    struct s_obj *next;
+} t_obj;
 
 #endif
 
@@ -65,11 +64,12 @@ typedef struct s_longout {
 
 #define MX_ISROOT(arg) (mx_strcmp(arg, "/") == 0)
 #define MX_ISMINUS(arg) (mx_strcmp(arg, "-") == 0)
+#define MX_ISSTART_DIR(arg) (mx_strcmp(arg, ".") == 0)
 
-void mx_write_flags(int argc, char *arg[], int flags[]);
+// void mx_write_flags(int argc, char *arg[], int flags[]);
 void mx_check_error(int errnum, char *filename, char c);
 t_cur_dir mx_set_current_dir(char *dir, char *past_path, int flags[]);
-char **mx_read_files(char *dir, int flags[]);
+char **mx_read_files(char *dir);
 void mx_del_hidden(char **files, int flags[]);
 void mx_sort_ascii(char **files, int flags[]);
 int mx_valid_args(int argc, char *arg[], int flags[]);

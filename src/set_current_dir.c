@@ -1,26 +1,45 @@
 #include "../inc/uls.h"
 
-static char *set_path(char *dir, char *past_path);
+static char *set_path(char *filename, char *past_path);
+static struct stat get_stats(char *path);
 
-t_cur_dir mx_set_current_dir(char *dir, char *past_path, int flags[]) {
-    t_cur_dir current;
-    char **files = mx_read_files(dir, flags);
-
-    current.path = set_path(dir, past_path);
-    current.count = mx_count_arr_el(files);
-    current.files = malloc(sizeof(t_files) * current.count);
-    current.dir_files = mx_get_stats(files, current.files, flags);
-    return current;
+t_obj *mx_set_current_dir(char *dir, char *past_path, char *flags) {
+    t_obj *filelist;
+    char **files = mx_read_files(dir);
+    if (!MX_ISSTART_DIR(dir))
+        mx_del_hidden(files, flags);
+    mx_sort_ascii(files, flags);
+    return (mx_get_list(files, past_path, flags));
 }
 
-static char *set_path(char *dir, char *past_path) {
+t_obj *mx_get_list(char **files, char *past_path, char *flags) {
+    t_obj *filelist = NULL;
+
+    for (int i = 0; files[i]; i++) {
+        filelist = mx_add_obj(files[i], filelist);
+        filelist->path = set_path(files[i], past_path);
+        filelist->stat = get_stats(filelist->path);
+    }
+    return filelist;
+}
+
+static char *set_path(char *filename, char *past_path) {
     char *temp = NULL;
     char *rez = NULL;
 
-    if (past_path)
+    if (!past_path)
+        temp = mx_strjoin(".", "/");
+    else
         temp = mx_strjoin(past_path, "/");
-    rez = mx_strjoin(temp, dir);
+    rez = mx_strjoin(temp, filename);
     mx_strdel(&temp);
     return rez;
+}
+
+static struct stat get_stats(char *path) {
+    struct stat s_curstat;
+
+    stat(path, &s_curstat);
+    return s_curstat;
 }
 // пофрішити все
