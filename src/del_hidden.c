@@ -1,18 +1,16 @@
 #include "../inc/uls.h"
 
-static _Bool is_A_flag(char *file);
+static _Bool is_a_flag(char *file);
 
-// flags: [a] - 1, [A] - 2, [4] - f
-void mx_del_hidden(char **files, int flags[]) {
+void mx_del_hidden(char **files, char *flags) {
     int count = 0;
     int i = 0;
     int temp = 0;
 
-    mx_sort_ascii(files, flags);
-    if (flags[2] != 1 && flags[4] != 1) {
+    if (!mx_is_flag_present(flags, 'a') && !mx_is_flag_present(flags, 'f')) {
         for (; files[i]; i++) {
-            if ((flags[3] == 1 && is_A_flag(files[i])) 
-                || (flags[3] == 0 && files[i][0] == '.')) {
+            if ((mx_is_flag_present(flags, 'A') && is_a_flag(files[i]))
+                || (!mx_is_flag_present(flags, 'A') && files[i][0] == '.')) {
                 count++;
                 temp = i + 1;
             }
@@ -26,7 +24,7 @@ void mx_del_hidden(char **files, int flags[]) {
     }
 }
 
-static _Bool is_A_flag(char *file) {
+static _Bool is_a_flag(char *file) {
     _Bool rez = 0;
 
     if (mx_strcmp(file, "..") == 0 || mx_strcmp(file, ".") == 0)

@@ -3,7 +3,7 @@
 static int find_len(char **files, int count, int *rows);
 static void print_file(char *file, int max);
 
-void mx_print_cols(char **files) {
+void mx_print_cflag(char **files) {
     int rows;
     int max;
     int count = mx_count_arr_el(files);

@@ -1,7 +1,7 @@
 #include "../inc/uls.h"
 
 void mx_check_error(int errnum, char *filename, char c) {
-    char *errors[] = {"usage: uls [-la1dfinp] [file ...]\n", 
+    char *errors[] = {"usage: uls [-laAf1mCdtuURon] [file ...]\n", 
                       "uls: illegal option -- ", "uls: ",
                       "\n", ": No such file or directory\n"};
     char *s = &c;
