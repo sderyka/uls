@@ -4,15 +4,17 @@ static char *set_path(char *filename, char *past_path);
 static struct stat get_stats(char *path);
 
 t_obj *mx_set_current_dir(char *dir, char *past_path, char *flags) {
-    t_obj *filelist;
+    t_obj *filelist = NULL;
     char **files = mx_read_files(dir);
+
     mx_sort_ascii(files, flags);
-    if (!MX_ISSTART_DIR(dir))
-        mx_del_hidden(files, flags);
-    return (mx_get_list(files, past_path, flags));
+    mx_del_hidden(files, flags);
+    filelist = mx_get_list(files, past_path);
+    free(files);
+    return filelist;
 }
 
-t_obj *mx_get_list(char **files, char *past_path, char *flags) {
+t_obj *mx_get_list(char **files, char *past_path) {
     t_obj *filelist = NULL;
     t_obj *head = filelist;
 
