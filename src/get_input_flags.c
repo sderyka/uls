@@ -1,7 +1,7 @@
 #include "../inc/uls.h"
 
 static void add_to_flags(char **flags_arr, char flag, int *i);
-// static void error_illegal_option(char c);
+static void error_illegal_option(char c);
 
 char *mx_get_input_flags(int argc, char *argv[]) {
     char *flags = NULL;
@@ -13,7 +13,7 @@ char *mx_get_input_flags(int argc, char *argv[]) {
                 break;
             for (int j = 1; j < mx_strlen(argv[i]); j++) {
                 if (mx_get_char_index(MX_MYFLAGS, argv[i][j]) == -1)
-                    mx_check_error(1, NULL, argv[i][j]);
+                    error_illegal_option(argv[i][j]);
                 add_to_flags(&flags, argv[i][j], &index);
             }
         }
@@ -30,12 +30,12 @@ static void add_to_flags(char **flags_arr, char flag, int *i) {
     (*i)++;
 }
 
-// static void error_illegal_option(char c) {
-//     mx_printerr("uls: illegal option -- ");
-//     mx_printerr(&c);
-//     mx_printerr("\nusage: ls [-");
-//     mx_printerr(MY_FLAGS);
-//     mx_printerr("] [file ...]\n");
-//     exit(1);
-// }
+static void error_illegal_option(char c) {
+    mx_print_error("uls: illegal option -- ");
+    mx_print_error(&c);
+    mx_print_error("\nusage: ls [-");
+    mx_print_error(MX_MYFLAGS);
+    mx_print_error("] [file ...]\n");
+    exit(1);
+}
 // пофрішити флаги

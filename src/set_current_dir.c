@@ -8,7 +8,9 @@ t_obj *mx_set_current_dir(char *dir, char *past_path, char *flags) {
     char **files = mx_read_files(dir);
 
     mx_sort_ascii(files, flags);
+    printf("%s\n", "1ok");
     mx_del_hidden(files, flags);
+    printf("%s\n", "del_ok");
     filelist = mx_get_list(files, past_path);
     free(files);
     return filelist;
@@ -22,6 +24,7 @@ t_obj *mx_get_list(char **files, char *past_path) {
         filelist = mx_add_obj(files[i], filelist);
         filelist->path = set_path(files[i], past_path);
         filelist->stat = get_stats(filelist->path);
+        printf("%s\n", filelist->name);
     }
     return head;
 }

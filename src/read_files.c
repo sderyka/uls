@@ -9,7 +9,7 @@ char **mx_read_files(char *dir) {
     for (; readdir(s_dir) != NULL; count++);
     closedir(s_dir);
     s_dir = opendir(dir);
-    file_names = mx_arrchar_new(count);
+    file_names = mx_arrchar_new(count + 1);
     for (int i = 0; (s_file = readdir(s_dir)) != NULL; i++) {
         file_names[i] = s_file->d_name;
     }
