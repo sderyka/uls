@@ -1,17 +1,13 @@
 #include "../inc/uls.h"
 
-char **mx_extract_filenames(t_obj *filelist) {
-	t_obj *temp = filelist;
+char **mx_extract_filenames(t_obj **filelist) {
     char **files;
     int count = 0;
 
-    for (; temp; temp = temp->next)
-        count++;
-    temp = filelist;
+    for (; filelist[count]; count++);
     files = mx_arrchar_new(count * 2);
     for (int i = 0; i < count; i++) {
-        files[i] = temp->name;
-        temp = temp->next;
+        files[i] = (filelist[i])->name;
     }
     return files;
 }
