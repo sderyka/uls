@@ -35,9 +35,9 @@
 typedef struct s_obj {
     char *name; 
     struct stat stat;
-    struct s_obj *content;
+    struct s_obj **content;
     char *path;
-    struct s_obj *next;
+    // struct s_obj *next;
 } t_obj;
 
 #endif
@@ -67,20 +67,20 @@ typedef struct s_obj {
 #define MX_ISSTART_DIR(arg) (mx_strcmp(arg, ".") == 0)
 #define MX_IS2MINUS(arg) (mx_strcmp(arg, "--") == 0)
 
-#define MY_FLAGS "laAf1mCdtuURon"
+#define MX_MYFLAGS "laAf1mCdtuURon"
 
 char *mx_get_input_flags(int argc, char *argv[]);
 void mx_check_error(int errnum, char *filename, char c);
-t_obj *mx_set_current_dir(char *dir, char *past_path, char *flags);
+t_obj **mx_set_current_dir(char *dir, char *past_path, char *flags);
 char **mx_read_files(char *dir);
 bool mx_is_flag_present(char *flags_arr, char flag);
 void mx_sort_ascii(char **files, char *flags);
 void mx_del_hidden(char **files, char *flags);
-t_obj *mx_get_list(char **files, char *past_path, char *flags);
-t_obj *mx_add_obj(char *filename, t_obj *list);
-char **mx_get_args(int argc, char *argv[], t_obj *filelist);
-char **mx_extract_filenames(t_obj *filelist);
-
+t_obj **mx_get_list(char **files, char *past_path);
+t_obj *mx_create_obj(char *filename);
+char **mx_get_args(int argc, char *argv[]);
+char **mx_extract_filenames(t_obj **filelist);
+void mx_print_format(t_obj **filelist, char *flags);
 int mx_find_max(char **strs);
 void mx_print_cflag(char **files);
 
