@@ -39,7 +39,7 @@ static void print_file(char *file, int max) {
 
     mx_printstr(file);
     while (spaces > 0) {
-        mx_printchar(' ');
+        write(1, " ", 1);
         spaces--;
     }
 }

@@ -21,7 +21,7 @@ char **mx_get_args(int argc, char *argv[]) {
         }
     }
     free(cur_dir_files);
-    return args;
+    return ((mx_count_arr_el(args) > 0) ? args : NULL);
 }
 
 static void add_name(char **args_arr, char *name, int *count) {

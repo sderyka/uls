@@ -1,16 +1,33 @@
 #include "../inc/uls.h"
 
-int main(int argc, char *argv[]) {
+static bool check_if_change_dir(char **args, int argc, char *last_arg);
 
+int main(int argc, char *argv[]) {
     char *flags = mx_get_input_flags(argc, argv);
-    // printf("%s\n", flags);
     char **args = mx_get_args(argc, argv);
-    mx_print_strarr(args, " ");
     t_obj **filelist = mx_set_current_dir(".", NULL, flags);
 
-    // for (int i = 0; filelist[i]; i++)
-    //     printf("%s\n", (filelist[i])->name); /////////////////////
-    mx_print_format(filelist, flags);
+    if (check_if_change_dir(args, argc, argv[argc - 1]))
+        mx_print_format(filelist, flags);
+    else {
+        mx_sort_ascii(args, flags);
+        mx_print_args(args, flags);
+    }
+    // free(filelist);
+    // free(args);
+    // free(flags);
     system("leaks -q uls");
     return 0;
+}
+
+static bool check_if_change_dir(char **args, int argc, char *last_arg) {
+    bool rez = 0;
+
+    if (args == NULL) {
+        if (argc == 1 || MX_IS2MINUS(last_arg)
+        	|| (last_arg[0] == '-' && !MX_ISMINUS(last_arg))) {
+            rez = 1;
+        }
+    }
+    return rez;
 }

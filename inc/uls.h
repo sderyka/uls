@@ -31,7 +31,6 @@
 //     char **dir_files;
 // } t_cur_dir;
 
-
 typedef struct s_obj {
     char *name; 
     struct stat stat;
@@ -83,5 +82,6 @@ char **mx_extract_filenames(t_obj **filelist);
 void mx_print_format(t_obj **filelist, char *flags);
 int mx_find_max(char **strs);
 void mx_print_cflag(char **files);
+void mx_print_args(char **args, char *flags);
 
 #endif

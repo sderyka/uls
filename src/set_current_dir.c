@@ -24,7 +24,6 @@ t_obj **mx_get_list(char **files, char *past_path) {
         current->path = set_path(files[i], past_path);
         current->stat = get_stats(current->path);
         filelist[i] = current;
-        // free(current);
     }
     return filelist;
 }
@@ -34,8 +33,10 @@ static char *set_path(char *filename, char *past_path) {
     char *temp2 = NULL;
     char *rez = NULL;
 
-    if (!past_path)
-        temp = mx_strjoin(".", "/");
+    if (!past_path) {
+        if (!MX_ISROOT(filename))
+            temp = mx_strjoin(".", "/");
+    }
     else
         temp = mx_strjoin(past_path, "/");
     temp2 = mx_strjoin(temp, filename);
