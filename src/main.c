@@ -16,7 +16,11 @@ int main(int argc, char *argv[]) {
     // free(filelist);
     // free(args);
     // free(flags);
-    system("leaks -q uls");
+    // system("leaks -q uls");
+    // printf("%s\n", "\n");
+    // char **test = mx_read_files("/dev");
+    // mx_print_strarr(test, " ");
+    // free(test);
     return 0;
 }
 
