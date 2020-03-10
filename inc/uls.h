@@ -83,5 +83,6 @@ void mx_print_format(t_obj **filelist, char *flags);
 int mx_find_max(char **strs);
 void mx_print_cflag(char **files);
 void mx_print_args(char **args, char *flags);
+char *mx_flag_priority(char *flags_arr);
 
 #endif

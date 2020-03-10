@@ -18,6 +18,7 @@ char *mx_get_input_flags(int argc, char *argv[]) {
             }
         }
     }
+    // flags = mx_flag_priority(flags);
     return flags;
 }
 
