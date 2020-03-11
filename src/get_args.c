@@ -39,8 +39,8 @@ static bool check_valid_arg(char *arg, char **cur_dir_files) {
 
     if (MX_ISROOT(arg))
         return 1;
-    if (slash_index < 0 && mx_get_arr_index(cur_dir_files, arg) < 0)
-        return 0;
+    if (slash_index < 0)
+        return ((mx_get_arr_index(cur_dir_files, arg) < 0) ? 0 : 1);
     dir = write_part_of_str(arg, 0, slash_index);
     name = write_part_of_str(arg, slash_index + 1, mx_strlen(arg));
     slash_dir_files = mx_read_files(dir);
@@ -63,8 +63,11 @@ static int get_last_char_index(const char *str, char c) {
 }
 
 static char *write_part_of_str(char *str, int start, int end) {
-    char *rez = mx_strnew(end - start);
+    char *rez = NULL;
 
+    if (start == end)
+        end++;
+    rez = mx_strnew(end - start);
     for (int i = 0; i < end; i++) {
         rez[i] = str[start];
         start++;

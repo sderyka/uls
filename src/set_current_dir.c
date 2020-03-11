@@ -33,12 +33,14 @@ static char *set_path(char *filename, char *past_path) {
     char *temp2 = NULL;
     char *rez = NULL;
 
+    if (mx_get_char_index(filename, '/') >= 0 && !past_path)
+        return filename;
     if (!past_path)
         temp = mx_strjoin(".", "/");
     else
         temp = mx_strjoin(past_path, "/");
     temp2 = mx_strjoin(temp, filename);
-    rez = (MX_ISROOT(filename)) ? filename : temp2;
+    rez = temp2;
     mx_strdel(&temp);
     mx_strdel(&temp2);
     return rez;
