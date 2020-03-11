@@ -48,8 +48,8 @@ static void split_modes(t_obj **filelist, t_obj **files, t_obj **dirs) {
 
 static void separate_files(t_obj *first_file, t_obj *first_dir, char *flags) {
     if (first_file && first_dir) {
-    	if (mx_is_flag_present(flags, 'm'))
-    	    mx_printchar(',');
+        if (mx_is_flag_present(flags, 'm'))
+            mx_printchar(',');
         mx_printchar('\n');
     }
 }

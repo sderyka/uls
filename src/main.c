@@ -4,13 +4,12 @@ static bool check_if_change_dir(char **args, int argc, char *last_arg);
 
 int main(int argc, char *argv[]) {
     char *flags = mx_get_input_flags(argc, argv);
-    // printf("%s\n", flags);
     char **args = mx_get_args(argc, argv);
     t_obj **filelist = mx_set_current_dir(".", NULL, flags);
 
     if (check_if_change_dir(args, argc, argv[argc - 1]))
         mx_print_format(filelist, flags);
-    else {
+    else if (args) {
         mx_sort_ascii(args, flags);
         mx_print_args(args, flags);
     }

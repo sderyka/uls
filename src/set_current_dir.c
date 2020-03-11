@@ -7,10 +7,12 @@ t_obj **mx_set_current_dir(char *dir, char *past_path, char *flags) {
     t_obj **filelist = NULL;
     char **files = mx_read_files(dir);
 
-    mx_sort_ascii(files, flags);
-    mx_del_hidden(files, flags);
-    filelist = mx_get_list(files, past_path);
-    free(files);
+    if (files) {
+        mx_sort_ascii(files, flags);
+        mx_del_hidden(files, flags);
+        filelist = mx_get_list(files, past_path);
+        free(files);
+    }
     return filelist;
 }
 

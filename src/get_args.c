@@ -31,9 +31,9 @@ static void add_name(char **args_arr, char *name, int *count) {
 }
 
 static bool check_valid_arg(char *arg, char **cur_dir_files) {
-    bool rez = 1;
+    bool rez = 0;
     int slash_index = get_last_char_index(arg, '/');
-    char **slash_dir_files;
+    char **slash_dir_files = NULL;
     char *dir = NULL;
     char *name = NULL;
 
@@ -44,8 +44,8 @@ static bool check_valid_arg(char *arg, char **cur_dir_files) {
     dir = write_part_of_str(arg, 0, slash_index);
     name = write_part_of_str(arg, slash_index + 1, mx_strlen(arg));
     slash_dir_files = mx_read_files(dir);
-    if (mx_get_arr_index(slash_dir_files, name) < 0)
-        rez = 0;
+    if (slash_dir_files && mx_get_arr_index(slash_dir_files, name) >= 0)
+        rez = 1;
     free(slash_dir_files);
     free(dir);
     free(name);
